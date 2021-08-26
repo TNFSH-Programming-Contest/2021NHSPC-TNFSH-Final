@@ -1,0 +1,44 @@
+# test_name gen_line_number gen_line_content
+0-01	  2	manual sample-01.in
+0-02	  3	manual sample-02.in
+1-01	  6	gen 1 0
+1-02	  7	gen 1 1
+1-03	  8	gen 1 2
+1-04	  9	gen 1 3
+1-05	 10	gen 1 4
+1-06	 11	gen 1 5
+1-07	 12	gen 1 6
+1-08	 13	gen 1 7
+1-09	 14	gen 1 8
+1-10	 15	gen 1 9
+1-11	 16	gen 1 10
+2-01	 19	manual sample-01.in
+2-02	 20	manual sample-02.in
+2-03	 21	gen 2 0
+2-04	 22	gen 2 1
+2-05	 23	gen 2 2
+2-06	 24	gen 2 3
+2-07	 25	gen 2 4
+2-08	 26	gen 2 5
+2-09	 27	gen 2 6
+2-10	 28	gen 2 7
+3-01	 31	gen 3 0
+3-02	 32	gen 3 1
+3-03	 33	gen 3 2
+3-04	 34	gen 3 3
+3-05	 35	gen 3 4
+3-06	 36	gen 3 5
+3-07	 37	gen 3 6
+3-08	 38	gen 3 7
+4-01	 41	gen 4 0
+4-02	 42	gen 4 1
+4-03	 43	gen 4 2
+4-04	 44	gen 4 3
+4-05	 45	gen 4 4
+4-06	 46	gen 4 5
+4-07	 47	gen 4 6
+4-08	 48	gen 4 7
+4-09	 49	gen 4 8
+4-10	 50	gen 4 9
+4-11	 51	gen 4 10
+4-12	 52	gen 4 11

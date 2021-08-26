@@ -1,0 +1,16 @@
+Arithmetic.cpp: In function 'int main()':
+Arithmetic.cpp:22:12: warning: declaration of 'k' shadows a global declaration [-Wshadow]
+   22 |    for(int k = 1; k <= 6; k++){
+      |            ^
+Arithmetic.cpp:4:11: note: shadowed declaration is here
+    4 | int n, m, k;
+      |           ^
+Arithmetic.cpp:42:9: warning: structured bindings only available with '-std=c++17' or '-std=gnu++17'
+   42 |   auto &[id, rank, school] = q.front();
+      |         ^
+Arithmetic.cpp:46:8: warning: declaration of 'id' shadows a previous local [-Wshadow]
+   46 |    int id = pq[school].top().second;
+      |        ^~
+Arithmetic.cpp:42:10: note: shadowed declaration is here
+   42 |   auto &[id, rank, school] = q.front();
+      |          ^~

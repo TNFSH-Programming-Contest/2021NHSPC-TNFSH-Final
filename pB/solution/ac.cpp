@@ -1,48 +1,70 @@
-// By xiplus
 #include <bits/stdc++.h>
 using namespace std;
 
-void add(long long a, long long b) {
-	cout << a << " + " << b << " = " << a + b << endl;
-}
-void sub(long long a, long long b) {
-	cout << a << " - " << b << " = " << a - b << endl;
-}
-void mul(long long a, long long b) {
-	cout << a << " * " << b << " = " << a * b << endl;
-}
-void div2(long long a, long long b) {
-	cout << a << " / " << b << " = " << a / b << " ... " << a % b << endl;
-}
-typedef void (*ScriptFunction)(long long, long long);
-
-struct div_0_exception {};
-
-void error(int) {
-	throw div_0_exception();
-}
+int n, m, k;
+pair<int, int> pick[100005][8];
+int cur[100005];
+vector<vector<int>> rk;
+priority_queue<pair<int, int>> pq[1005];
+queue<tuple<int, int, int>> q;
+vector<vector<int>> ans;
 
 int main() {
-	if (SIG_ERR == signal(SIGFPE, error)) {
-		cerr << "failure to setup signal.";
-		return 1;
+	ios::sync_with_stdio(0), cin.tie(0);
+	cin >> n >> m >> k;
+	rk.resize(m + 1);
+	for(int i = 1; i <= n; i++) for(int j = 1; j <= 6; j++) cin >> pick[i][j].first;
+	for(int i = 1, siz; i <= m; i++){
+		cin >> siz;
+		rk[i].resize(siz);
+		for(int j = 0; j < siz; j++){
+			cin >> rk[i][j];
+			for(int k = 1; k <= 6; k++){
+				if(pick[rk[i][j]][k].first == i){
+					pick[rk[i][j]][k].second = j;
+					break;
+				}
+			}
+		}
 	}
 
-	map<char, ScriptFunction> func;
-	func['+'] = add;
-	func['-'] = sub;
-	func['*'] = mul;
-	func['/'] = div2;
+	/*
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= 6; j++){
+			cout << i << " " << j << " " << pick[i][j].first << " " << pick[i][j].second << '\n';
+		}
+	}
+	*/
 
-	long long a, b;
-	char c;
-	cin >> a >> c >> b;
-	cout << fixed << setprecision(4);
-	try {
-		func[c](a, b);
-	} catch (div_0_exception) {
-		cout << "ERROR" << endl;
+	for(int i = 1; i <= n; i++) q.push({i, pick[i][1].second, pick[i][1].first}), cur[i] = 1;
+
+	while(!q.empty()){
+		auto &[id, rank, school] = q.front();
+		q.pop();
+		pq[school].push({rank, id});
+		if((int)pq[school].size() > k){
+			int id = pq[school].top().second;
+			pq[school].pop();
+			cur[id]++;
+			if(cur[id] <= 6) q.push({id, pick[id][cur[id]].second, pick[id][cur[id]].first}); 
+		}
 	}
 
-	return 0;
+	ans.resize(m + 1);
+	for(int i = 1; i <= m; i++){
+		while(!pq[i].empty()){
+			ans[i].push_back(pq[i].top().second);
+			pq[i].pop();
+		}
+		sort(ans[i].begin(), ans[i].end());
+	}
+
+	for(int i = 1; i <= m; i++){
+		cout << ans[i].size();
+		for(auto &x : ans[i]) cout << " " << x;
+		cout << '\n';
+	}
+
+
+	
 }

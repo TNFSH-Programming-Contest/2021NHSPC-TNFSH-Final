@@ -6,12 +6,29 @@ using namespace std;
 int main() {
 	registerValidation();
 
-	int A = inf.readInt(-1000000000, 1000000000);
+	int n = inf.readInt(1, 100000);
 	inf.readSpace();
-	inf.readChar();
+	int m = inf.readInt(6, 1000);
 	inf.readSpace();
-	int B = inf.readInt(-1000000000, 1000000000);
+	int k = inf.readInt(1, n);
 	inf.readEoln();
+
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < 6; j++){
+			if(j) inf.readSpace();
+			int tmp = inf.readInt(1, m);
+		}
+		inf.readEoln();
+	}
+
+	for(int i = 1; i <= m; i++){
+		int siz = inf.readInt(0, n);
+		for(int j = 0; j < siz; j++){
+			inf.readSpace();
+			inf.readInt(1, n);
+		}
+		inf.readEoln();
+	}
 
 	inf.readEof();
 
