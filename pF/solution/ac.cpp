@@ -16,21 +16,21 @@ template<typename T,typename ...U> void _do(T x,U ...y){cerr<<x<<", ";_do(y...);
 const ll mod = 1000000007;
 
 ll n;
-#define mat array<array<ll, 10>, 10>
+#define mat array<array<ll, 12>, 12>
 mat trans[62];
-vi ans(10, 0);
+vi ans(12, 0);
 
 vi dp(vi v){
-    vi aa(10, 0);
+    vi aa(12, 0);
     aa[0] = v[0];
-    for(int i = 1; i < 10; i++) aa[i] = (aa[i-1] + v[i]) % mod;
+    for(int i = 1; i < 12; i++) aa[i] = (aa[i-1] + v[i]) % mod;
     return aa;
 }
 
 vi vec_mul(vi v, mat m){
-    vi aa(10, 0);
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
+    vi aa(12, 0);
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 12; j++){
             aa[i] += v[j] * m[j][i];
             aa[i] %= mod;
         }
@@ -40,10 +40,10 @@ vi vec_mul(vi v, mat m){
 
 mat operator*(mat x, mat y){
     mat aa;
-    for(int i = 0; i < 10; i++) for(int j = 0; j < 10; j++) aa[i][j] = 0;
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
-            for(int k = 0; k < 10; k++){
+    for(int i = 0; i < 12; i++) for(int j = 0; j < 12; j++) aa[i][j] = 0;
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 12; j++){
+            for(int k = 0; k < 12; k++){
                 aa[i][j] += x[i][k] * y[k][j];
                 aa[i][j] %= mod;
             }
@@ -54,12 +54,12 @@ mat operator*(mat x, mat y){
 
 mat mat_mul(mat x, ll p){
     mat m = x, aa;
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 12; j++){
             aa[i][j] = 0;
         }
     }
-    for(int i = 0; i < 10; i++) aa[i][i] = 1;
+    for(int i = 0; i < 12; i++) aa[i][i] = 1;
     while(p){
         if(p & 1) aa = aa * m;
         m = m * m;
@@ -70,21 +70,21 @@ mat mat_mul(mat x, ll p){
 
 signed main(){
     IOS;
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
-            trans[0][i][j] = 10 - max(i, j);
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 12; j++){
+            trans[0][i][j] = 12 - max(i, j);
         }
     }
     for(int i = 1; i < 60; i++) trans[i] = trans[i-1] * trans[i-1];
     cin >> n;
     fill(all(ans), 0);
-    for(int i = 0; i < 10; i++) ans[i] = 1;
+    for(int i = 0; i < 12; i++) ans[i] = 1;
     for(ll i = 0, d = (n - 1) / 2; i < 60; i++){
         if(d >> i & 1) ans = vec_mul(ans, trans[i]);
     }
     if(~n & 1) ans = dp(ans);
     ll cnt = 0;
-    for(int i = 0; i < 10; i++) cnt += ans[i], cnt %= mod;
+    for(int i = 0; i < 12; i++) cnt += ans[i], cnt %= mod;
     cout << cnt << '\n';
 }
 
