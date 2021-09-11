@@ -1,0 +1,181 @@
+name: Build pdf
+
+on:
+  # push:
+  #   paths:
+  #     - '*/scripts/statement.sh'
+  #     - '*/statement/*.jpg'
+  #     - '*/statement/index.md'
+  #     - '*/problem.json'
+  #     - '*/subtasks.json'
+  #     - 'cover.tex'
+  #     - 'template.tex'
+  workflow_dispatch:
+    inputs:
+        target:
+            description: 'Problem labels to build'
+            default: '0ABCDEF'
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install tps
+        run: |
+          git clone https://github.com/ioi-2017/tps.git
+          cd tps && sudo ./install-tps.sh
+
+      - name: Install pandoc
+        run: |
+          wget https://github.com/jgm/pandoc/releases/download/2.10.1/pandoc-2.10.1-1-amd64.deb
+          sudo dpkg -i pandoc-2.10.1-1-amd64.deb
+
+      - name: Install xetex
+        run: |
+          sudo add-apt-repository ppa:jonathonf/texlive-2019
+          sudo apt-get update
+          sudo apt-get install texlive-xetex
+
+      - name: Install fonts
+        run: |
+          sudo mkdir -p /usr/share/fonts/opentype/noto
+          wget -nv https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJK-Regular.ttc.zip
+          unzip NotoSansCJK-Regular.ttc.zip -d NotoSansCJK-Regular
+          ls -al NotoSansCJK-Regular
+          sudo cp NotoSansCJK-Regular/NotoSansCJK-Regular.ttc /usr/share/fonts/opentype/noto
+          wget -nv https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJK-Bold.ttc.zip
+          unzip NotoSansCJK-Bold.ttc.zip -d NotoSansCJK-Bold
+          ls -al NotoSansCJK-Bold
+          sudo cp NotoSansCJK-Bold/NotoSansCJK-Bold.ttc /usr/share/fonts/opentype/noto
+          ls -al /usr/share/fonts/opentype/noto
+          sudo fc-cache -f -v
+
+      - name: Install pdfunite
+        run: |
+          sudo apt-get install poppler-utils
+
+      - name: Check environment
+        working-directory: pA
+        run: |
+          lsb_release -a
+          echo ""
+          pandoc -v
+          echo ""
+          xetex -v
+          echo ""
+          tps || :;
+          echo ""
+          fc-list | grep "Noto Sans Mono CJK TC" || :;
+          echo ""
+          pdfunite -v
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            pA:
+              - 'pA/scripts/statement.sh'
+              - 'pA/statement/*.jpg'
+              - 'pA/statement/index.md'
+              - 'pA/problem.json'
+              - 'pA/subtasks.json'
+              - 'cover.tex'
+              - 'template.tex'
+            pB:
+              - 'pB/scripts/statement.sh'
+              - 'pB/statement/*.jpg'
+              - 'pB/statement/index.md'
+              - 'pB/problem.json'
+              - 'pB/subtasks.json'
+              - 'template.tex'
+            pC:
+              - 'pC/scripts/statement.sh'
+              - 'pC/statement/*.jpg'
+              - 'pC/statement/index.md'
+              - 'pC/problem.json'
+              - 'pC/subtasks.json'
+              - 'template.tex'
+            pD:
+              - 'pD/scripts/statement.sh'
+              - 'pD/statement/*.jpg'
+              - 'pD/statement/index.md'
+              - 'pD/problem.json'
+              - 'pD/subtasks.json'
+              - 'template.tex'
+            pE:
+              - 'pE/scripts/statement.sh'
+              - 'pE/statement/*.jpg'
+              - 'pE/statement/index.md'
+              - 'pE/problem.json'
+              - 'pE/subtasks.json'
+              - 'template.tex'
+            pF:
+              - 'pF/scripts/statement.sh'
+              - 'pF/statement/*.jpg'
+              - 'pF/statement/index.md'
+              - 'pF/problem.json'
+              - 'pF/subtasks.json'
+              - 'template.tex'
+
+      - name: Build pA
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pA == 'true') || contains(github.event.inputs.target, 'A')
+        run: |
+          xelatex cover.tex
+          tps statement
+          pdfunite cover.pdf pA/statement/index.pdf pA/statement/index-with-cover.pdf
+          rm pA/statement/index.pdf
+          mv pA/statement/index-with-cover.pdf pA/statement/index.pdf
+
+      - name: Build pB
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pB == 'true') || contains(github.event.inputs.target, 'B')
+        working-directory: pB
+        run: |
+          tps statement
+
+      - name: Build pC
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pC == 'true') || contains(github.event.inputs.target, 'C')
+        working-directory: pC
+        run: |
+          tps statement
+
+      - name: Build pD
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pD == 'true') || contains(github.event.inputs.target, 'D')
+        working-directory: pD
+        run: |
+          tps statement
+
+      - name: Build pE
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pE == 'true') || contains(github.event.inputs.target, 'E')
+        working-directory: pE
+        run: |
+          tps statement
+
+      - name: Build pF
+        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pF == 'true') || contains(github.event.inputs.target, 'F')
+        working-directory: pF
+        run: |
+          tps statement
+
+      - name: Merge pdfs
+        run: |
+          mkdir -p pA/attachments
+          pdfunite pA/statement/index.pdf pB/statement/index.pdf pC/statement/index.pdf pD/statement/index.pdf pE/statement/index.pdf pF/statement/index.pdf pA/attachments/problems.pdf
+
+      - name: Commit pdf
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git status
+          git add pA/statement/index.pdf
+          git add pB/statement/index.pdf
+          git add pC/statement/index.pdf
+          git add pD/statement/index.pdf
+          git add pE/statement/index.pdf
+          git add pF/statement/index.pdf
+          git add pA/attachments/problems.pdf
+          git pull
+          git diff-index --quiet HEAD -- || git commit -m "Build pdf"
+          git push
