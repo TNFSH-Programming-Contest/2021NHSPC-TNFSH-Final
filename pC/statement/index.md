@@ -2,7 +2,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=2in]{tfcis.jpg}
+\includegraphics[width=12cm]{tfcis.jpg}
 \caption{圖片說明}
 \end{figure}
 

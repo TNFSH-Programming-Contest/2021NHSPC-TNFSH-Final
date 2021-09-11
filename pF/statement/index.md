@@ -2,7 +2,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=2in]{img.jpg}
+\includegraphics[width=12cm]{img.jpg}
 \caption{Hello, Happy World! 團體照片，出自遊戲《BanG Dream! 少女樂團派對》}
 \end{figure}
 
