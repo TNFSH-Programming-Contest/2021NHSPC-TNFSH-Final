@@ -55,6 +55,7 @@ signed main()
 	{
 		cin>>a>>b;
 		G[a].emplace_back(b);
+		G[b].emplace_back(a);
 	}
 	dfs(1,0);
 	cin>>q;
