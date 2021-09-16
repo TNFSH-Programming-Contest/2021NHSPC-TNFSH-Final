@@ -1,11 +1,5 @@
 # 四則運算
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=12cm]{tfcis.jpg}
-\caption{圖片說明}
-\end{figure}
-
 如果需要放圖片，如上語法。  
 行末使用兩個半形空格為換行語法。  
 
