@@ -24,7 +24,7 @@
 		"sub3": {
             "index": 3,
             "score": 20,
-            "text": "$\\sum{A_i} \\leq 10^6$",
+            "text": "$\\displaystyle\\sum{A_i} \\leq 10^6$",
             "validators": []
         },
 		"sub4": {
