@@ -1,0 +1,56 @@
+ac.cpp
+solution            compile[WARN]
+0-01                sol[OK]    0.013     check[OK]        1  [Correct]             
+0-02                sol[OK]    0.012     check[OK]        1  [Correct]             
+1-01                sol[OK]    0.023     check[OK]        1  [Correct]             
+1-02                sol[OK]    0.082     check[OK]        1  [Correct]             
+1-03                sol[OK]    0.099     check[OK]        1  [Correct]             
+1-04                sol[OK]    0.081     check[OK]        1  [Correct]             
+1-05                sol[FAIL]  0.165     check[SKIP]      0  [Runtime Error]       
+1-06                sol[OK]    0.041     check[OK]        1  [Correct]             
+1-07                sol[OK]    0.066     check[OK]        1  [Correct]             
+1-08                sol[OK]    0.039     check[OK]        1  [Correct]             
+1-09                sol[OK]    0.023     check[OK]        1  [Correct]             
+1-10                sol[OK]    0.041     check[OK]        1  [Correct]             
+1-11                sol[OK]    0.111     check[OK]        1  [Correct]             
+2-01                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-02                sol[OK]    0.011     check[OK]        1  [Correct]             
+2-03                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-04                sol[OK]    0.013     check[OK]        1  [Correct]             
+2-05                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-06                sol[OK]    0.013     check[OK]        1  [Correct]             
+2-07                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-08                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-09                sol[OK]    0.012     check[OK]        1  [Correct]             
+2-10                sol[OK]    0.011     check[OK]        1  [Correct]             
+3-01                sol[OK]    0.013     check[OK]        1  [Correct]             
+3-02                sol[OK]    0.013     check[OK]        1  [Correct]             
+3-03                sol[OK]    0.013     check[OK]        1  [Correct]             
+3-04                sol[OK]    0.013     check[OK]        1  [Correct]             
+3-05                sol[OK]    0.013     check[OK]        1  [Correct]             
+3-06                sol[OK]    0.014     check[OK]        1  [Correct]             
+3-07                sol[OK]    0.014     check[OK]        1  [Correct]             
+3-08                sol[OK]    0.013     check[OK]        1  [Correct]             
+4-01                sol[OK]    0.073     check[OK]        1  [Correct]             
+4-02                sol[OK]    0.049     check[OK]        1  [Correct]             
+4-03                sol[OK]    0.032     check[OK]        1  [Correct]             
+4-04                sol[OK]    0.013     check[OK]        1  [Correct]             
+4-05                sol[OK]    0.032     check[OK]        1  [Correct]             
+4-06                sol[OK]    0.124     check[OK]        1  [Correct]             
+4-07                sol[OK]    0.106     check[OK]        1  [Correct]             
+4-08                sol[OK]    0.100     check[OK]        1  [Correct]             
+4-09                sol[OK]    0.120     check[OK]        1  [Correct]             
+4-10                sol[OK]    0.087     check[OK]        1  [Correct]             
+4-11                sol[OK]    0.045     check[OK]        1  [Correct]             
+4-12                sol[OK]    0.062     check[OK]        1  [Correct]             
+samples             [2/2 tests]    [Correct]             [0/0 pts]      [match with expected]             0-01
+s1                  [11/11 tests]  [Runtime Error]       [0/25 pts]     [expected: model_solution]        1-05
+n8                  [10/10 tests]  [Correct]             [30/30 pts]    [match with expected]             2-01
+1e3                 [8/8 tests]    [Correct]             [30/30 pts]    [match with expected]             3-01
+all                 [12/12 tests]  [Correct]             [50/50 pts]    [match with expected]             4-01
+
+Subtask summary
+110/135 pts
+
+Finished.
+
