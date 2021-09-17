@@ -12,25 +12,25 @@
         "sub1": {
             "index": 1,
             "score": 20,
-            "text": "$N \\leq 20$",
+            "text": "$n \\leq 20$",
             "validators": []
         },
 		"sub2": {
             "index": 2,
             "score": 20,
-            "text": "$N \\leq 400$",
+            "text": "$n \\leq 400$",
             "validators": []
         },
 		"sub3": {
             "index": 3,
             "score": 20,
-            "text": "$\\displaystyle\\sum{A_i} \\leq 10^6$",
+            "text": "$\\displaystyle\\sum{w_i} \\leq 10^6$",
             "validators": []
         },
 		"sub4": {
             "index": 4,
             "score": 20,
-            "text": "$N \\leq 700$",
+            "text": "$n \\leq 700$",
             "validators": []
         },
 		"all": {
