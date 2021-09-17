@@ -2,8 +2,8 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{cat.png}
-\caption{喵}
+\includegraphics[width=\textwidth]{kira2.png}
+\caption{「在你告訴別人之前，我要先把你收拾掉，讓我今晚也能好好睡一覺。」}
 \end{figure}
 
 有一長度 N 的正整數數列 A，須將序列分成多個連續段，使得每一段的總和相同。  
