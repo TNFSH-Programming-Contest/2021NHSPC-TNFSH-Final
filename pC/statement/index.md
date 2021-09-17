@@ -2,7 +2,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=12cm]{img.png}
+\includegraphics[width=12cm]{img.jpg}
 \caption{和真正在向其他人炫耀自己獲得的新技能，出自動畫《為美好的世界獻上祝福！》}
 \end{figure}
 
