@@ -6,8 +6,8 @@ on:
       - '*/scripts/statement.sh'
       - '*/statement/*.jpg'
       - '*/statement/index.md'
-- '*/problem.json'
-- '*/subtasks.json'
+      # - '*/problem.json'
+      # - '*/subtasks.json'
       - 'cover.tex'
       - 'template.tex'
   workflow_dispatch:
