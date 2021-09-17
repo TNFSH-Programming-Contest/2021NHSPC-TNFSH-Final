@@ -2,7 +2,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=12cm]{img.png}
+\includegraphics[width=12cm]{img.jpg}
 \caption{和真正在向其他人炫耀自己獲得的新技能，出自動畫《為美好的世界獻上祝福！》}
 \end{figure}
 
@@ -31,6 +31,8 @@
 
 ## 輸入限制
 - $1 \le n,m \le 10^3$
+- $1 \le s_x, e_x \le n$
+- $1 \le s_y, e_y \le m$
 - $-10^9 \le w_{ij} \le 10^9$
 
 ## 子任務
