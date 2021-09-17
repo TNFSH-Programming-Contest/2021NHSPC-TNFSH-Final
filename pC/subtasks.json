@@ -24,7 +24,7 @@
         "n4": {
             "index": 3,
             "score": 50,
-            "text": "$n \\le 4$",
+            "text": "$n,m \\le 4$",
             "validators": []
         },
         "all": {
