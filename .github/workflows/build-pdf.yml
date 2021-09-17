@@ -124,7 +124,7 @@ jobs:
         if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pA == 'true') || contains(github.event.inputs.target, 'A')
         run: |
           xelatex cover.tex
-          tps statement
+          cd pA && tps statement
           pdfunite cover.pdf pA/statement/index.pdf pA/statement/index-with-cover.pdf
           rm pA/statement/index.pdf
           mv pA/statement/index-with-cover.pdf pA/statement/index.pdf
