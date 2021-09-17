@@ -1,5 +1,8 @@
 {
-	"ac.cpp": {
+	"full.cpp": {
 		"verdict": "model_solution"
+	},
+	"full_all_ll.cpp": {
+		"verdict": "correct"
 	}
 }
