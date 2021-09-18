@@ -1,4 +1,4 @@
-# ultimate boss 3liminator - 3
+# 為美好的地牢獻上爆擊
 
 \begin{figure}[h]
 \centering

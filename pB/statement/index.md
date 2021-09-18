@@ -1,4 +1,4 @@
-# 高中學測分發
+# 學測分發
 
 \begin{figure}[h]
 \centering

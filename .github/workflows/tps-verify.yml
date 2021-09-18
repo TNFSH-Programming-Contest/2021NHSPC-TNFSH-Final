@@ -1,14 +1,14 @@
 name: TPS verify
 
 on:
-  # push:
-  #   paths:
-  #     - 'pA/**'
-  #     - 'pB/**'
-  #     - 'pC/**'
-  #     - 'pD/**'
-  #     - 'pE/**'
-  #     - 'pF/**'
+  push:
+    paths:
+      - 'pA/**'
+      - 'pB/**'
+      - 'pC/**'
+      - 'pD/**'
+      - 'pE/**'
+      - 'pF/**'
   workflow_dispatch:
 
 jobs:

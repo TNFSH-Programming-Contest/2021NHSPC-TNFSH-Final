@@ -6,7 +6,7 @@
 
 | ID | statement | gen | validator | solution | tests | config |
 | --- | --- | --- | --- | --- | --- | --- |
-| A. 序列問題 (暫) | [statement](pA/statement) [md](pA/statement/index.md) [pdf](pA/statement/index.pdf) | [gen](pA/gen) | [validator](pA/validator) | [solution](pA/solution) [check](pA/solutions-check.txt) | [tests](pA/tests) | [problem](pA/problem.json) [solutions](pA/solutions.json) [subtasks](pA/subtasks.json) |
+| A. 吉良吉影想平靜地過日子 | [statement](pA/statement) [md](pA/statement/index.md) [pdf](pA/statement/index.pdf) | [gen](pA/gen) | [validator](pA/validator) | [solution](pA/solution) [check](pA/solutions-check.txt) | [tests](pA/tests) | [problem](pA/problem.json) [solutions](pA/solutions.json) [subtasks](pA/subtasks.json) |
 | B. 學測分發 | [statement](pB/statement) [md](pB/statement/index.md) [pdf](pB/statement/index.pdf) | [gen](pB/gen) | [validator](pB/validator) | [solution](pB/solution) [check](pB/solutions-check.txt) | [tests](pB/tests) | [problem](pB/problem.json) [solutions](pB/solutions.json) [subtasks](pB/subtasks.json) |
 | C. 為美好的地牢獻上爆擊 | [statement](pC/statement) [md](pC/statement/index.md) [pdf](pC/statement/index.pdf) | [gen](pC/gen) | [validator](pC/validator) | [solution](pC/solution) [check](pC/solutions-check.txt) | [tests](pC/tests) | [problem](pC/problem.json) [solutions](pC/solutions.json) [subtasks](pC/subtasks.json) |
 | D. 本田小狼 | [statement](pD/statement) [md](pD/statement/index.md) [pdf](pD/statement/index.pdf) | [gen](pD/gen) | [validator](pD/validator) | [solution](pD/solution) [check](pD/solutions-check.txt) | [tests](pD/tests) | [problem](pD/problem.json) [solutions](pD/solutions.json) [subtasks](pD/subtasks.json) |

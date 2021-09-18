@@ -1,4 +1,4 @@
-# pE. 遞迴呀遞迴
+# 遞迴呀遞迴
 
 \begin{figure}[h]
 \centering
