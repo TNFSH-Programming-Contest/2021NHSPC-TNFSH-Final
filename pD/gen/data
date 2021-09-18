@@ -1,50 +1,53 @@
 @subtask samples
 manual sample-01.in
+manual sample-02.in
 
-@subtask a0
-gen task2 qutxm
-gen task2 iqsds
-gen task2 qsvsu
-gen task2 entmw
-gen task2 pwcpr
-gen task2 tvgso
-gen task2 ulads
-gen task2 sxrfu
-gen task2 yhuhq
-gen task2 enihw
-gen task2 zhton
-gen task2 jhfof
-gen task2 shvex
+@subtask 5e3
+gen 1 0.01 0.01
+gen 1 0.02 0.02
+gen 1 0.03 0.03
 
-@subtask 1e4
-gen norm 0 10000 csizh
-gen norm 0 10000 xtqcy
-gen norm 0 10000 ilhti
-gen norm 0 10000 bhsud
-gen norm 0 10000 nmknb
-gen norm 0 10000 wgryr
-gen norm 0 10000 khjyf
-gen norm 0 10000 utnbp
-gen norm 0 10000 bowkf
-gen norm 0 10000 jecqs
-gen norm 0 10000 hgcnm
-gen norm 0 10000 ubpto
-gen norm 0 10000 bzuuu
-gen norm 0 10000 mnmer
+@subtask k100
+gen 2 0.004 0.004
+gen 2 0.005 0.005
+gen 2 0.006 0.006
+gen 2 0.007 0.007
+
+@subtask kk
+gen 3 0.004 0.004
+gen 3 0.005 0.005
+gen 3 0.006 0.006
+gen 3 0.005 0.5
+gen 3 0.006 1
+
+@subtask d50
+gen 4 0.1 0.1
+gen 4 0.2 0.2
+gen 4 0.3 0.3
+gen 4 0.4 0.4
+gen 4 0.5 0.5
+gen 4 0.6 0.6
+gen 4 0.7 0.7
+gen 4 0.8 0.8
+
+@subtask 1e5
+gen 5 0.004 0.004
+gen 5 0.005 0.005
+gen 5 0.006 0.006
+gen 5 0.007 0.007
+gen 5 0.004 0.4
+gen 5 0.005 1
+gen 5 0.006 1.8
+gen 5 0.007 2.8
 
 @subtask all
-manual all-01.in
-gen norm -1000000000 1000000000 jvnyj
-gen norm -1000000000 1000000000 mtkbd
-gen norm -1000000000 1000000000 cihky
-gen norm -1000000000 1000000000 xnvey
-gen norm -1000000000 1000000000 hsrhk
-gen norm -1000000000 1000000000 dbgtb
-gen norm -1000000000 1000000000 qfsov
-gen norm -1000000000 1000000000 jskbd
-gen norm -1000000000 1000000000 oxwpy
-gen norm -1000000000 1000000000 ljnss
-gen norm -1000000000 1000000000 kzdqk
-gen norm -1000000000 1000000000 mvijw
-gen norm -1000000000 1000000000 dzzwm
-gen norm -1000000000 1000000000 wfbej
+gen 6 0.003 0.003
+gen 6 0.004 0.004
+gen 6 0.005 0.005
+gen 6 0.006 0.006
+gen 6 0.007 0.007
+gen 6 0.003 0.3
+gen 6 0.004 0.8
+gen 6 0.005 1.5
+gen 6 0.006 2.4
+gen 6 0.007 3.5
