@@ -1,9 +1,9 @@
-# 
+# 吉良吉影想平靜地過日子
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{kira2.png}
-\caption{「在你告訴別人之前，我要先把你收拾掉，讓我今晚也能好好睡一覺。」}
+\includegraphics[width=12cm]{kira2.jpg}
+\caption{「在你告訴別人之前，我要先把你收拾掉，讓我今晚也能好好睡一覺。」，出自動畫《???》}
 \end{figure}
 
 杜王町存在一位名為 \underline{吉良} 的危險人物。在他遭遇到 \underline{重清} 識破他的身分時，他決定使用他的特殊能力「殺手皇后」消滅對方，因而與重清的「收成者」對峙。
