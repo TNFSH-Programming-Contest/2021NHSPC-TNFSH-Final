@@ -36,7 +36,7 @@
         "1e5": {
             "index": 5,
             "score": 50,
-            "text": "$n \\le 10^5",
+            "text": "$n \\le 10^5$",
             "validators": []
         },
         "all": {
