@@ -18,7 +18,7 @@
 		"sub2": {
             "index": 2,
             "score": 20,
-            "text": "$n \\leq 400$",
+            "text": "$n \\leq 500$",
             "validators": []
         },
 		"sub3": {
@@ -30,7 +30,7 @@
 		"sub4": {
             "index": 4,
             "score": 20,
-            "text": "$n \\leq 700$",
+            "text": "$n \\leq 800$",
             "validators": []
         },
 		"all": {

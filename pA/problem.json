@@ -4,7 +4,7 @@
 	"name": "YoshikageKiraJustWantsToLiveQuietly",
 	"title": "吉良吉影想平靜地過日子",
 	"memory_limit": 512,
-	"time_limit": 1.0,
+	"time_limit": 2.0,
 	"type": "Batch",
 	"description": "",
 	"tps_web_url": "",
