@@ -144,22 +144,6 @@ def genSumFixed(n, S, wrange):
 	
 	return [len(w), w]
 
-# genSumDivisor
-# def genSumDivisor(n, S):
-	# lst = 0
-	# w = []
-	# for i in range(1, S):
-		# if len(w) >= n-1:
-			# break
-		
-		# if S%i == 0:
-			# w.append(i - lst)
-			# lst = i
-	
-	# w.append(S - sum(w))
-	# assert( len(w) == n )
-	# return [len(w), w]
-
 def _alldiv(N):
 	v = []
 	for i in range(1, N):
@@ -209,8 +193,6 @@ def genMain():
 	gen.newTest('sub1', 2, genRandom, opt_gen=dict(nrange=(18, 20), wrange=(1, 10**9)),
 				opt_postProcess=dict(checkfunc=checkSub1))
 	
-	# gen.newTest('sub1', 1, genSplitNum, opt_gen=dict(nmax=20, k=999999937, szrange=(1, 20)),
-				# opt_postProcess=dict(checkfunc=checkSub1))
 	gen.newTest('sub1', 1, genSplitNum, opt_gen=dict(nmax=20, k=999855251, szrange=(9, 11)),
 				opt_postProcess=dict(checkfunc=checkSub1))
 	gen.newTest('sub1', 1, genSplitNum, opt_gen=dict(nmax=20, k=999855277, szrange=(1, 1)),
@@ -319,10 +301,6 @@ def genMain():
 	
 	gen.newTest('sub5', 1, genHCN66Div, opt_gen=dict(n=1300),
 				opt_postProcess=dict(checkfunc=checkAll))
-	
-	# 223092870 # 23
-	# 6469693230 # 29
-	# 7420738134810 # 37
 	
 	
 	runTest.config(test_dir='manual')
