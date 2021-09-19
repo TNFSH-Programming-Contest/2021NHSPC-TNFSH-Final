@@ -48,3 +48,16 @@ manual sub4-07.in
 manual sub4-08.in
 manual sub4-09.in
 
+@subtask all
+manual all-00.in
+manual all-01.in
+manual all-02.in
+manual all-03.in
+manual all-04.in
+manual all-05.in
+manual all-06.in
+manual all-07.in
+manual all-08.in
+manual all-09.in
+manual all-10.in
+
