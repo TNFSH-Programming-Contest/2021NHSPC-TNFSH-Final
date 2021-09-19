@@ -12,6 +12,7 @@ gen 2 0.004 0.004
 gen 2 0.005 0.005
 gen 2 0.006 0.006
 gen 2 0.007 0.007
+manual latina.in
 
 @subtask kk
 gen 3 0.004 0.004
