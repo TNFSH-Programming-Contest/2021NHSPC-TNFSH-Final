@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include "testlib.h"
 
 using namespace std;
@@ -6,12 +7,25 @@ using namespace std;
 int main() {
 	registerValidation();
 
-	int A = inf.readInt(-1000000000, 1000000000);
-	inf.readSpace();
-	inf.readChar();
-	inf.readSpace();
-	int B = inf.readInt(-1000000000, 1000000000);
+	int n = inf.readInt(1, 1000000);
 	inf.readEoln();
+
+	for (int i = 0; i < n - 1; i++) {
+		inf.readInt(1, n);
+		inf.readSpace();
+		inf.readInt(1, n);
+		inf.readEoln();
+	}
+
+	int q = inf.readInt(1, 1000000);
+	inf.readEoln();
+
+	for (int i = 0; i < q; i++) {
+		int p = inf.readInt(1, n);
+		inf.readSpace();
+		int k = inf.readInt(0, n);
+		inf.readEoln();
+	}
 
 	inf.readEof();
 
