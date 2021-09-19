@@ -278,28 +278,28 @@ def genMain():
 				opt_postProcess=dict(checkfunc=checkSub4))
 	
 	
-	print('[genMain]: Gen #sub5')
-	gen.newTest('sub5', 3, genRandom, opt_gen=dict(nrange=(7000, 8000), wrange=(1, 10**9)),
+	print('[genMain]: Gen #all')
+	gen.newTest('all', 3, genRandom, opt_gen=dict(nrange=(7000, 8000), wrange=(1, 10**9)),
 				opt_postProcess=dict(checkfunc=checkAll))
 	
-	gen.newTest('sub5', 1, genSplitNum, opt_gen=dict(nmax=8000, k=999855251, szrange=(4950, 5050)),
+	gen.newTest('all', 1, genSplitNum, opt_gen=dict(nmax=8000, k=999855251, szrange=(4950, 5050)),
 				opt_postProcess=dict(checkfunc=checkAll))
-	gen.newTest('sub5', 1, genSplitNum, opt_gen=dict(nmax=8000, k=999855277, szrange=(1, 1)),
+	gen.newTest('all', 1, genSplitNum, opt_gen=dict(nmax=8000, k=999855277, szrange=(1, 1)),
 				opt_postProcess=dict(checkfunc=checkAll))
-	gen.newTest('sub5', 1, genSplitNum, opt_gen=dict(nmax=7560, k=999855277, szrange=(1, 1)),
+	gen.newTest('all', 1, genSplitNum, opt_gen=dict(nmax=7560, k=999855277, szrange=(1, 1)),
 				opt_postProcess=dict(checkfunc=checkAll))
-	gen.newTest('sub5', 1, genSplitNum, opt_gen=dict(nmax=8000, k=124991, szrange=(5, 10)),
-				opt_postProcess=dict(checkfunc=checkAll))
-	
-	gen.newTest('sub5', 1, genProd, opt_gen=dict(seq=[2, 3, 5, 7, 11, 13, 17, 19, 23]),
-				opt_postProcess=dict(checkfunc=checkAll))
-	gen.newTest('sub5', 1, genProd, opt_gen=dict(seq=[2657, 2663, 2659]),
+	gen.newTest('all', 1, genSplitNum, opt_gen=dict(nmax=8000, k=124991, szrange=(5, 10)),
 				opt_postProcess=dict(checkfunc=checkAll))
 	
-	gen.newTest('sub5', 1, genSumFixed, opt_gen=dict(n=8000, S=7999999997833, wrange=(1, 10**9)),
+	gen.newTest('all', 1, genProd, opt_gen=dict(seq=[2, 3, 5, 7, 11, 13, 17, 19, 23]),
+				opt_postProcess=dict(checkfunc=checkAll))
+	gen.newTest('all', 1, genProd, opt_gen=dict(seq=[2657, 2663, 2659]),
 				opt_postProcess=dict(checkfunc=checkAll))
 	
-	gen.newTest('sub5', 1, genHCN66Div, opt_gen=dict(n=1300),
+	gen.newTest('all', 1, genSumFixed, opt_gen=dict(n=8000, S=7999999997833, wrange=(1, 10**9)),
+				opt_postProcess=dict(checkfunc=checkAll))
+	
+	gen.newTest('all', 1, genHCN66Div, opt_gen=dict(n=1300),
 				opt_postProcess=dict(checkfunc=checkAll))
 	
 	
@@ -316,12 +316,13 @@ def genMain():
 		
 		print(caseMap)
 		for subtask in subtasks:
-			if subtask in caseMap:
-				gendata.write('@subtask {}\n'.format(subtask))
-				for inpath in caseMap[subtask]:
-					gendata.write('manual {}\n'.format(inpath))
-				
-				gendata.write('\n')
+			assert( subtask in caseMap )
+			
+			gendata.write('@subtask {}\n'.format(subtask))
+			for inpath in caseMap[subtask]:
+				gendata.write('manual {}\n'.format(inpath))
+			
+			gendata.write('\n')
 
 if __name__ == "__main__":
 	genStart(genMain)
