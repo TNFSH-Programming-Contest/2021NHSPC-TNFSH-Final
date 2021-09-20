@@ -39,7 +39,8 @@ int main() {
 	for(int i = 1; i <= n; i++) q.push({i, pick[i][1].second, pick[i][1].first}), cur[i] = 1;
 
 	while(!q.empty()){
-		auto &[id, rank, school] = q.front();
+		int id, rank, school;
+		tie(id, rank, school) = q.front();
 		q.pop();
 		pq[school].push({rank, id});
 		if((int)pq[school].size() > k){
