@@ -52,6 +52,7 @@ int main() {
 
 	ans.resize(m + 1);
 	for(int i = 1; i <= m; i++){
+                ans[i].clear();
 		while(!pq[i].empty()){
 			ans[i].push_back(pq[i].top().second);
 			pq[i].pop();
