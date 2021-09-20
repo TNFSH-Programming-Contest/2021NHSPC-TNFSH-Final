@@ -4,5 +4,8 @@
 	},
 	"full_all_ll.cpp": {
 		"verdict": "correct"
+	},
+	"full_sum_divisor.cpp": {
+		"verdict": "correct"
 	}
 }
