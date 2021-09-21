@@ -24,7 +24,7 @@
         "1e3": {
             "index": 3,
             "score": 30,
-            "text": "$n \\le 10^3$",
+            "text": "$n \\le 1000$",
             "validators": []
         },
         "all": {

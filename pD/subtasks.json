@@ -18,7 +18,7 @@
         "k100": {
             "index": 2,
             "score": 30,
-            "text": "$n,q \\le 10^5,k \\le 100$",
+            "text": "$n,q \\le 10^5$ 且 $k \\le 100$",
             "validators": []
         },
         "kk": {
