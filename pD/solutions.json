@@ -3,14 +3,14 @@
 		"verdict": "model_solution"
 	},
 	"partial_dsu_on_tree.cpp" : {
-		"verdict": "failed",
+		"verdict": "time_limit",
 		"except": {
 			"samples": "correct",
-			"sub1": "correct",
-			"sub2": "correct",
-			"sub3": "correct",
-			"sub4": "correct",
-			"sub5": "correct",
+			"5e3": "correct",
+			"k100": "correct",
+			"kk": "correct",
+			"d50": "correct",
+			"1e5": "correct",
 			"all": "incorrect"
 		}
 	}
