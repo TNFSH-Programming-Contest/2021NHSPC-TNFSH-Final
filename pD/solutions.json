@@ -11,7 +11,11 @@
 			"kk": "correct",
 			"d50": "correct",
 			"1e5": "correct",
+<<<<<<< HEAD
 			"all": "incorrect"
+=======
+			"all": "time_limit"
+>>>>>>> d3959bcae93cec17bac1d1bbb45f760793e08888
 		}
 	}
 }
