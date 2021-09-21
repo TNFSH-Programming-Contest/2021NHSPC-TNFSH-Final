@@ -61,6 +61,7 @@ jobs:
               - p${{ matrix.problem }}/solution/${{ steps.env.outputs.model_solution }}
             solutions:
               - p${{ matrix.problem }}/solution/**
+              - p${{ matrix.problem }}/solutions.json
 
       - name: Show changed files
         env:
