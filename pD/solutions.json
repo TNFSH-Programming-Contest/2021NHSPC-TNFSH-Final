@@ -8,7 +8,7 @@
 			"samples": "correct",
 			"5e3": "correct",
 			"k100": "correct",
-			"kk": "correct",
+			"kk": "time_limit",
 			"d50": "correct",
 			"1e5": "correct",
 			"all": "time_limit"
