@@ -7,19 +7,112 @@ on:
       - '*/statement/*.jpg'
       - '*/statement/index.md'
       - '*/problem.json'
+      - '*/subtasks.json'
       - 'template.tex'
+      - 'cover.tex'
   workflow_dispatch:
     inputs:
-        target:
-            description: 'Problem labels to build'
-            default: 'ABCDEF'
+      target:
+        description: 'Problem labels to build'
+        default: 'ABCDEF'
 
 jobs:
-  build:
+  check-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: [A, B, C, D, E, F]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Make flags dir
+        run: |
+          mkdir -p /home/runner/flags/
+          touch /home/runner/flags/.keep
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: 'json'
+          filters: |
+            pdf:
+              - p${{ matrix.problem }}/scripts/statement.sh
+              - p${{ matrix.problem }}/statement/*.jpg
+              - p${{ matrix.problem }}/statement/index.md
+              - template.tex
+            cover:
+              - cover.tex
+
+      - name: Set problem flag
+        if: steps.changes.outputs.pdf == 'true' || (matrix.problem == 'A' && steps.changes.outputs.cover == 'true')
+        run: |
+          echo "${{ matrix.problem }}" > /home/runner/flags/${{ matrix.problem }}
+
+      - name: Check changes in config
+        run: |
+          set +e
+
+          git diff ${{ github.event.before }}..HEAD -U0 p${{ matrix.problem }}/problem.json | grep '"contest_name"\|"problem_label"\|"name"\|"title"\|"memory_limit"\|"time_limit"'
+          if [ $? -eq 0 ]; then
+            echo "${{ matrix.problem }}" > /home/runner/flags/${{ matrix.problem }}
+          else
+            echo "No changes in problem.json for pdf";
+          fi
+
+          git diff ${{ github.event.before }}..HEAD -U0 p${{ matrix.problem }}/subtasks.json | grep '"index"\|"score"\|"text"'
+          if [ $? -eq 0 ]; then
+            echo "${{ matrix.problem }}" > /home/runner/flags/${{ matrix.problem }}
+          else
+            echo "No changes in subtasks.json for pdf";
+          fi
+
+      - name: Upload flags
+        uses: actions/upload-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
+
+  check-manually:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: [A, B, C, D, E, F]
+
+    steps:
+      - name: Make flags dir
+        run: |
+          mkdir -p /home/runner/flags/
+          touch /home/runner/flags/.keep
+
+      - name: Set problem flag
+        if: contains(github.event.inputs.target, matrix.problem)
+        run: |
+          echo "${{ matrix.problem }}" > /home/runner/flags/${{ matrix.problem }}
+
+      - name: Upload flags
+        uses: actions/upload-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
+
+  build-pdf:
+    needs: [check-push, check-manually]
+    if: always()
     runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Download flags
+        uses: actions/download-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
 
       - name: Install tps
         run: |
@@ -70,105 +163,49 @@ jobs:
           echo ""
           pdfunite -v
 
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            pA:
-              - 'pA/scripts/statement.sh'
-              - 'pA/statement/*.jpg'
-              - 'pA/statement/index.md'
-              - 'pA/problem.json'
-              - 'cover.tex'
-              - 'template.tex'
-            pB:
-              - 'pB/scripts/statement.sh'
-              - 'pB/statement/*.jpg'
-              - 'pB/statement/index.md'
-              - 'pB/problem.json'
-              - 'template.tex'
-            pC:
-              - 'pC/scripts/statement.sh'
-              - 'pC/statement/*.jpg'
-              - 'pC/statement/index.md'
-              - 'pC/problem.json'
-              - 'template.tex'
-            pD:
-              - 'pD/scripts/statement.sh'
-              - 'pD/statement/*.jpg'
-              - 'pD/statement/index.md'
-              - 'pD/problem.json'
-              - 'template.tex'
-            pE:
-              - 'pE/scripts/statement.sh'
-              - 'pE/statement/*.jpg'
-              - 'pE/statement/index.md'
-              - 'pE/problem.json'
-              - 'template.tex'
-            pF:
-              - 'pF/scripts/statement.sh'
-              - 'pF/statement/*.jpg'
-              - 'pF/statement/index.md'
-              - 'pF/problem.json'
-              - 'template.tex'
+      - name: Check target
+        id: target
+        working-directory: /home/runner/flags/
+        run: |
+          probs=$(ls -m .)
+          echo $probs
+          echo "::set-output name=problems::$probs"
 
-      - name: Build pA
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pA == 'true') || contains(github.event.inputs.target, 'A')
+      - name: Build cover
+        if: contains(steps.target.outputs.problems, 'A')
         run: |
           xelatex cover.tex
-          cd pA
-          tps statement
-          cd ..
+
+      - name: Build pdf
+        run: |
+          for prob in $(cat /home/runner/flags/*); do
+            cd p${prob} && tps statement && cd ..
+          done
+
+      - name: Merge cover into pA
+        if: contains(steps.target.outputs.problems, 'A')
+        run: |
           pdfunite cover.pdf pA/statement/index.pdf pA/statement/index-with-cover.pdf
           rm pA/statement/index.pdf
           mv pA/statement/index-with-cover.pdf pA/statement/index.pdf
 
-      - name: Build pB
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pB == 'true') || contains(github.event.inputs.target, 'B')
-        working-directory: pB
-        run: |
-          tps statement
-
-      - name: Build pC
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pC == 'true') || contains(github.event.inputs.target, 'C')
-        working-directory: pC
-        run: |
-          tps statement
-
-      - name: Build pD
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pD == 'true') || contains(github.event.inputs.target, 'D')
-        working-directory: pD
-        run: |
-          tps statement
-
-      - name: Build pE
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pE == 'true') || contains(github.event.inputs.target, 'E')
-        working-directory: pE
-        run: |
-          tps statement
-
-      - name: Build pF
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pF == 'true') || contains(github.event.inputs.target, 'F')
-        working-directory: pF
-        run: |
-          tps statement
-
       - name: Merge pdfs
         run: |
           mkdir -p pA/attachments
-          pdfunite pA/statement/index.pdf pB/statement/index.pdf pC/statement/index.pdf pD/statement/index.pdf pE/statement/index.pdf pF/statement/index.pdf pA/attachments/problems.pdf
+          pdfunite pA/statement/index.pdf pB/statement/index.pdf pC/statement/index.pdf pA/attachments/problems.pdf
+
+      - name: Check diff
+        run: |
+          git diff --name-only
 
       - name: Commit pdf
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git status
-          git add pA/statement/index.pdf
-          git add pB/statement/index.pdf
-          git add pC/statement/index.pdf
-          git add pD/statement/index.pdf
-          git add pE/statement/index.pdf
-          git add pF/statement/index.pdf
+          for prob in $(cat /home/runner/flags/*); do
+            git add p${prob}/statement/index.pdf
+          done
           git add pA/attachments/problems.pdf
           git pull
           git diff-index --quiet HEAD -- || git commit -m "Build pdf"

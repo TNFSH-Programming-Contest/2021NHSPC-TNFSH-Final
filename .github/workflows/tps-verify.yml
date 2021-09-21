@@ -3,17 +3,19 @@ name: TPS verify
 on:
   push:
     paths:
-      - 'pA/**'
-      - 'pB/**'
-      - 'pC/**'
-      - 'pD/**'
-      - 'pE/**'
-      - 'pF/**'
+      - 'p*/**'
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Problem labels to verify'
+        default: 'ABCDEF'
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: [A, B, C, D, E, F]
 
     steps:
       - uses: actions/checkout@v2
@@ -28,32 +30,15 @@ jobs:
           git clone https://github.com/ioi-2017/tps.git
           cd tps && sudo ./install-tps.sh
 
-      - name: Verify pA
-        working-directory: pA
-        run: |
-          tps verify
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            any:
+              - p${{ matrix.problem }}/**
 
-      - name: Verify pB
-        working-directory: pB
-        run: |
-          tps verify
-
-      - name: Verify pC
-        working-directory: pC
-        run: |
-          tps verify
-
-      - name: Verify pD
-        working-directory: pD
-        run: |
-          tps verify
-
-      - name: Verify pE
-        working-directory: pE
-        run: |
-          tps verify
-
-      - name: Verify pF
-        working-directory: pF
+      - name: Verify
+        if: (github.event_name == 'push' && steps.changes.outputs.any == 'true') || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.target, matrix.problem))
+        working-directory: p${{ matrix.problem }}
         run: |
           tps verify

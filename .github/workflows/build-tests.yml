@@ -1,161 +1,295 @@
 name: Build tests
 
 on:
-  # push:
-  #   paths:
-  #     - '*/solution/**'
-  #     - '*/problem.json'
-  #     - '*/solutions.json'
-  #     - '*/subtasks.json'
+  push:
+    paths:
+      - '*/gen/**'
+      - '*/solution/**'
+      - '*/problem.json'
+      - '*/solutions.json'
   workflow_dispatch:
     inputs:
-        target:
-            description: 'Problem labels to build'
-            default: 'ABCDEF'
+      input:
+        description: 'Problem labels to build inputs'
+        default: ''
+      output:
+        description: 'Problem labels to build outputs'
+        default: ''
+      solutions:
+        description: 'Problem labels to run solutions'
+        default: ''
 
 jobs:
-  build:
+  check-push:
+    if: github.event_name == 'push'
     runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: [A, B, C, D, E, F]
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Install dependencies
+      - name: Make flags dir
         run: |
-          sudo apt-get install dos2unix python3-setuptools
-          sudo python3 -m pip install psutil
+          mkdir -p /home/runner/flags/build-tests/
+          touch /home/runner/flags/build-tests/.keep
+          mkdir -p /home/runner/flags/build-input/
+          touch /home/runner/flags/build-input/.keep
+          mkdir -p /home/runner/flags/build-output/
+          touch /home/runner/flags/build-output/.keep
+          mkdir -p /home/runner/flags/run-solutions/
+          touch /home/runner/flags/run-solutions/.keep
+
+      - name: Set env
+        id: env
+        working-directory: p${{ matrix.problem }}
+        run: |
+          export model_solution=$(SOLUTIONS_JSON=./solutions.json python3 scripts/internal/get_model_solution.py)
+          echo "::set-output name=model_solution::$model_solution"
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: 'json'
+          filters: |
+            input:
+              - p${{ matrix.problem }}/gen/**
+            output:
+              - p${{ matrix.problem }}/solution/${{ steps.env.outputs.model_solution }}
+            solutions:
+              - p${{ matrix.problem }}/solution/**
+
+      - name: Show changed files
+        env:
+          FILES: ${{ toJson(steps.changes.outputs) }}
+        run: |
+          echo "$FILES"
+
+      - name: Set input flag
+        if: steps.changes.outputs.input == 'true'
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/build-input/${{ matrix.problem }}
+
+      - name: Set output flag
+        if: steps.changes.outputs.output == 'true'
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/build-output/${{ matrix.problem }}
+
+      - name: Set solutions flag
+        if: steps.changes.outputs.solutions == 'true'
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/run-solutions/${{ matrix.problem }}
+
+      - name: Check changes in config
+        run: |
+          set +e
+
+          git diff ${{ github.event.before }}..HEAD -U0 p${{ matrix.problem }}/problem.json | grep '"time_limit"'
+          if [ $? -eq 0 ]; then
+            echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+            echo true > /home/runner/flags/run-solutions/${{ matrix.problem }}
+          else
+            echo "No changes in problem.json for solutions";
+          fi
+
+          git diff ${{ github.event.before }}..HEAD -U0 p${{ matrix.problem }}/solutions.json | grep '"model_solution"'
+          if [ $? -eq 0 ]; then
+            echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+            echo true > /home/runner/flags/build-input/${{ matrix.problem }}
+          else
+            echo "No changes in solutions.json for input";
+          fi
+
+      - name: Upload flags
+        uses: actions/upload-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
+
+  check-manually:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: [A, B, C, D, E, F]
+
+    steps:
+      - name: Make flags dir
+        run: |
+          mkdir -p /home/runner/flags/build-tests/
+          touch /home/runner/flags/build-tests/.keep
+          mkdir -p /home/runner/flags/build-input/
+          touch /home/runner/flags/build-input/.keep
+          mkdir -p /home/runner/flags/build-output/
+          touch /home/runner/flags/build-output/.keep
+          mkdir -p /home/runner/flags/run-solutions/
+          touch /home/runner/flags/run-solutions/.keep
+
+      - name: Set input flag
+        if: contains(github.event.inputs.input, matrix.problem)
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/build-input/${{ matrix.problem }}
+
+      - name: Set output flag
+        if: contains(github.event.inputs.output, matrix.problem)
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/build-output/${{ matrix.problem }}
+
+      - name: Set solutions flag
+        if: contains(github.event.inputs.solutions, matrix.problem)
+        run: |
+          echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+          echo true > /home/runner/flags/run-solutions/${{ matrix.problem }}
+
+      - name: Upload flags
+        uses: actions/upload-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
+
+  check-post:
+    needs: [check-push, check-manually]
+    if: always()
+    runs-on: ubuntu-18.04
+    outputs:
+      build-tests: ${{ steps.build-tests.outputs.build-tests }}
+      build-input: ${{ steps.build-input.outputs.build-input }}
+      build-output: ${{ steps.build-output.outputs.build-output }}
+      run-solutions: ${{ steps.run-solutions.outputs.run-solutions }}
+
+    steps:
+      - name: Download flags
+        uses: actions/download-artifact@v2
+        with:
+          name: flags
+          path: /home/runner/flags/
+
+      - name: build-tests
+        id: build-tests
+        working-directory: /home/runner/flags/build-tests/
+        run: |
+          probs=$(python3 -c 'import json, glob; print(json.dumps(glob.glob("*")))')
+          echo $probs
+          echo "::set-output name=build-tests::$probs"
+
+      - name: build-input
+        id: build-input
+        working-directory: /home/runner/flags/build-input/
+        run: |
+          probs=$(python3 -c 'import glob; print("".join(glob.glob("*")))')
+          echo $probs
+          echo "::set-output name=build-input::$probs"
+
+      - name: build-output
+        id: build-output
+        working-directory: /home/runner/flags/build-output/
+        run: |
+          probs=$(python3 -c 'import glob; print("".join(glob.glob("*")))')
+          echo $probs
+          echo "::set-output name=build-output::$probs"
+
+      - name: run-solutions
+        id: run-solutions
+        working-directory: /home/runner/flags/run-solutions/
+        run: |
+          probs=$(python3 -c 'import glob; print("".join(glob.glob("*")))')
+          echo $probs
+          echo "::set-output name=run-solutions::$probs"
+
+  build-tests:
+    if: always() && needs.check-post.outputs.build-tests != '[]'
+    needs: check-post
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        problem: ${{ fromJson(needs.check-post.outputs.build-tests) }}
+
+    steps:
+      - uses: actions/checkout@v2
 
       - name: Setup git
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get install dos2unix python3-setuptools
+          sudo python3 -m pip install psutil
+
       - name: Install tps
         run: |
           git clone https://github.com/ioi-2017/tps.git
           cd tps && sudo ./install-tps.sh
 
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            pA:
-              - 'pA/gen/**'
-              - 'pA/solution/**'
-              - 'pA/problem.json'
-              - 'pA/solutions.json'
-              - 'pA/subtasks.json'
-            pB:
-              - 'pB/gen/**'
-              - 'pB/solution/**'
-              - 'pB/problem.json'
-              - 'pB/solutions.json'
-              - 'pB/subtasks.json'
-            pC:
-              - 'pC/gen/**'
-              - 'pC/solution/**'
-              - 'pC/problem.json'
-              - 'pC/solutions.json'
-              - 'pC/subtasks.json'
-            pD:
-              - 'pD/gen/**'
-              - 'pD/solution/**'
-              - 'pD/problem.json'
-              - 'pD/solutions.json'
-              - 'pD/subtasks.json'
-            pE:
-              - 'pE/gen/**'
-              - 'pE/solution/**'
-              - 'pE/problem.json'
-              - 'pE/solutions.json'
-              - 'pE/subtasks.json'
-            pF:
-              - 'pF/gen/**'
-              - 'pF/solution/**'
-              - 'pF/problem.json'
-              - 'pF/solutions.json'
-              - 'pF/subtasks.json'
-
-      - name: Build pA
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pA == 'true') || contains(github.event.inputs.target, 'A')
-        working-directory: pA
+      - name: env
+        env:
+          NEEDS: ${{ toJson(needs) }}
+          ENVS: ${{ toJson(env) }}
         run: |
-          tps gen -s --no-gen
+          echo "$NEEDS"
+          echo "$ENVS"
+
+      - name: Build inputs and outputs
+        if: contains(needs.check-post.outputs.build-input, matrix.problem)
+        working-directory: p${{ matrix.problem }}
+        run: |
+          echo "Building input for ${{ matrix.problem }}"
+          tps gen -s
+          git status
+          git add gen/data
           git add tests/*.in
           git add tests/*.out
           git add tests/gen_summary
           git add tests/mapping
-          rm -f solutions-check.txt
-          tps solutions | tee -a solutions-check.txt
-          git add solutions-check.txt
+          git pull
+          git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Build inputs and outputs"
 
-      - name: Build pB
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pB == 'true') || contains(github.event.inputs.target, 'B')
-        working-directory: pB
+      - name: Build outputs
+        if: ${{ !contains(needs.check-post.outputs.build-input, matrix.problem) && contains(needs.check-post.outputs.build-output, matrix.problem) }}
+        working-directory: p${{ matrix.problem }}
         run: |
+          echo "Building output for ${{ matrix.problem }}"
           tps gen -s --no-gen
-          git add tests/*.in
+          git status
           git add tests/*.out
-          git add tests/gen_summary
-          git add tests/mapping
-          rm -f solutions-check.txt
-          tps solutions | tee -a solutions-check.txt
-          git add solutions-check.txt
+          git pull
+          git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Build outputs"
 
-      - name: Build pC
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pC == 'true') || contains(github.event.inputs.target, 'C')
-        working-directory: pC
+      - name: Check tests changes
+        id: tests-changes
         run: |
-          tps gen -s --no-gen
-          git add tests/*.in
-          git add tests/*.out
-          git add tests/gen_summary
-          git add tests/mapping
-          rm -f solutions-check.txt
-          tps solutions | tee -a solutions-check.txt
-          git add solutions-check.txt
+          set +e
 
-      - name: Build pD
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pD == 'true') || contains(github.event.inputs.target, 'D')
-        working-directory: pD
+          git diff ${{ github.sha }}..HEAD --quiet p${{ matrix.problem }}/tests/
+          if [ $? -ne 0 ]; then
+            echo "::set-output name=changed::true"
+            echo "Tests changed"
+          else
+            echo "No changes in tests";
+          fi
+
+      - name: Run solutions
+        if: contains(needs.check-post.outputs.run-solutions, matrix.problem) || steps.tests-changes.outputs.changed == 'true'
+        working-directory: p${{ matrix.problem }}
         run: |
-          tps gen -s --no-gen
-          git add tests/*.in
-          git add tests/*.out
-          git add tests/gen_summary
-          git add tests/mapping
+          echo "Run solutions for ${{ matrix.problem }}"
           rm -f solutions-check.txt
           tps solutions | tee -a solutions-check.txt
+          git status
           git add solutions-check.txt
+          git pull
+          git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Run solutions"
 
-      - name: Build pE
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pE == 'true') || contains(github.event.inputs.target, 'E')
-        working-directory: pE
-        run: |
-          tps gen -s --no-gen
-          git add tests/*.in
-          git add tests/*.out
-          git add tests/gen_summary
-          git add tests/mapping
-          rm -f solutions-check.txt
-          tps solutions | tee -a solutions-check.txt
-          git add solutions-check.txt
-
-      - name: Build pF
-        if: (github.event_name != 'workflow_dispatch' && steps.changes.outputs.pF == 'true') || contains(github.event.inputs.target, 'F')
-        working-directory: pF
-        run: |
-          tps gen -s --no-gen
-          git add tests/*.in
-          git add tests/*.out
-          git add tests/gen_summary
-          git add tests/mapping
-          rm -f solutions-check.txt
-          tps solutions | tee -a solutions-check.txt
-          git add solutions-check.txt
-
-      - name: Commit tests
+      - name: Push
         run: |
           git pull
-          git diff --cached --quiet || git commit -m "Build tests"
           git push
