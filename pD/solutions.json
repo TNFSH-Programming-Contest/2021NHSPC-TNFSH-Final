@@ -2,7 +2,7 @@
 	"ac.cpp": {
 		"verdict": "model_solution"
 	},
-	"partial_dsu_on_tree.cpp" : {
+	"partial_dsu_on_tree.cpp": {
 		"verdict": "time_limit",
 		"except": {
 			"samples": "correct",
