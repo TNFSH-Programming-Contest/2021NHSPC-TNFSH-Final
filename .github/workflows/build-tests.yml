@@ -281,7 +281,7 @@ jobs:
         run: |
           set +e
 
-          git diff ${{ github.sha }}..HEAD --quiet p${{ matrix.problem }}/tests/
+          git diff ${{ github.sha }}..HEAD --quiet p${{ matrix.problem }}/tests/*.in p${{ matrix.problem }}/tests/*.out
           if [ $? -ne 0 ]; then
             echo "::set-output name=changed::true"
             echo "Tests changed"
