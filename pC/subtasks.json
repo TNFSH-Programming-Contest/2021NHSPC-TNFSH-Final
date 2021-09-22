@@ -11,25 +11,25 @@
         },
         "no": {
             "index": 1,
-            "score": 20,
+            "score": 22,
             "text": "沒有ADD",
             "validators": []
         },
         "eq": {
             "index": 2,
-            "score": 30,
+            "score": 9,
             "text": "除了ADD以外所有$w$相等",
             "validators": []
         },
         "n4": {
             "index": 3,
-            "score": 50,
+            "score": 32,
             "text": "$n,m \\le 4$",
             "validators": []
         },
         "all": {
             "index": 4,
-            "score": 50,
+            "score": 37,
             "text": "無額外限制",
             "validators": []
         }
