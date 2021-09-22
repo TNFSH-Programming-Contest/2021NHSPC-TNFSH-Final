@@ -513,7 +513,7 @@ def main():
 
 		print(caseMap)
 		for subtask in caseMap:
-			gendata.write('@subtask {}\n'.format('samples' if subtask == 0 else subtask))
+			gendata.write('@subtask {}\n'.format('samples' if subtask == '0' else subtask))
 			for inpath in caseMap[subtask]:
 				gendata.write('manual {}\n'.format(inpath))
 
