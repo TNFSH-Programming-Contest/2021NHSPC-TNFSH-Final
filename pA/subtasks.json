@@ -11,31 +11,31 @@
         },
         "sub1": {
             "index": 1,
-            "score": 20,
+            "score": 9,
             "text": "$n \\leq 20$",
             "validators": []
         },
 		"sub2": {
             "index": 2,
-            "score": 20,
+            "score": 19,
             "text": "$n \\leq 500$",
             "validators": []
         },
 		"sub3": {
             "index": 3,
-            "score": 20,
+            "score": 17,
             "text": "$\\displaystyle\\sum{w_i} \\leq 10^6$",
             "validators": []
         },
 		"sub4": {
             "index": 4,
-            "score": 20,
+            "score": 29,
             "text": "$n \\leq 800$",
             "validators": []
         },
 		"all": {
             "index": 5,
-            "score": 20,
+            "score": 26,
             "text": "沒有其他限制",
             "validators": []
         }
