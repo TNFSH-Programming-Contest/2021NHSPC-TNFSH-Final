@@ -1,5 +1,29 @@
 {
 	"ac.cpp": {
 		"verdict": "model_solution"
+	},
+	"E1.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E2.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E3.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E4.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E5.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E5_noGenEuler.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E6.cpp": {
+		"verdict": "partially_correct"
+	},
+	"E6_noGenEuler.cpp": {
+		"verdict": "partially_correct"
 	}
 }

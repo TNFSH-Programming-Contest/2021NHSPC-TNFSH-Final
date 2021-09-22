@@ -273,6 +273,30 @@ def gen5B():
 	p = random.randint(1, MAXP)
 	return [a, b, c, a_0, a_1, n, p]
 
+@gen5
+def gen5C():
+	p = random.randint(1, MAXP)
+	ep = euler(p)
+	a = 1
+	b = 0
+	c = 0
+	a_0 = random.randint(MINV // p, MAXV // p) * p
+	a_1 = random.randint(MINV // p, MAXV // p) * p
+	n = random.randint(1, ep - 1)
+	return [a, b, c, a_0, a_1, n, p]
+
+@gen5
+def gen5D():
+	p = random.randint(1, MAXP)
+	ep = euler(p)
+	a = 1
+	b = 0
+	c = 0
+	a_0 = random.randint(MINV // p, MAXV // p) * p
+	a_1 = random.randint(MINV // p, MAXV // p) * p
+	n = random.randint(int(.95 * MAXN), MAXN)
+	return [a, b, c, a_0, a_1, n, p]
+
 ############################## Gen 6 ##############################
 
 def gen6(genfunc):
@@ -308,6 +332,42 @@ def gen6B():
 	p = random.randint(1, MAXP)
 	return [a, b, c, a_0, a_1, n, p]
 
+def euler(x):
+	ans, i = x, 2
+	while i * i <= x:
+		if x % i == 0:
+			ans = ans // i * (i - 1)
+			while x % i == 0:
+				x //= i
+		i += 1
+	if x != 1:
+		ans = ans / x * (x - 1)
+	return ans
+
+@gen6
+def gen6C():
+	p = random.randint(1, MAXP)
+	ep = euler(p)
+	a = random.randint(MINV // p, MAXV // p) * p
+	b = 0
+	c = 0
+	a_0 = random.randint(MINV // p, MAXV // p) * p
+	a_1 = random.randint(MINV // p, MAXV // p) * p
+	n = random.randint(1, ep - 1)
+	return [a, b, c, a_0, a_1, n, p]
+
+@gen6
+def gen6D():
+	p = random.randint(1, MAXP)
+	ep = euler(p)
+	a = random.randint(MINV // p, MAXV // p) * p
+	b = 0
+	c = 0
+	a_0 = random.randint(MINV // p, MAXV // p) * p
+	a_1 = random.randint(MINV // p, MAXV // p) * p
+	n = random.randint(int(.95 * MAXN), MAXN)
+	return [a, b, c, a_0, a_1, n, p]
+
 ############################## Gen 7 ##############################
 
 def gen7(genfunc):
@@ -339,6 +399,27 @@ def gen7B():
 	a_0 = random.randint(MINV, MAXV)
 	a_1 = random.randint(MINV, MAXV)
 	n = random.randint(int(.95 * MAXN), MAXN)
+	p = 2
+	return [a, b, c, a_0, a_1, n, p]
+
+stateSet = [127, 124, 123, 121, 120, 119, 117, 111, 110, 109, 103, 102, 101, 100, 96, 93, 90, 89, 87, 86, 85, 68, 64, 62, 60, 59, 58, 56, 55, 54, 53]
+@gen7
+def gen7C():
+	state = stateSet[random.randint(0, len(stateSet) - 1)]
+
+	n = random.randint(int(.95 * MAXN) // 2, MAXN // 2) * 2 + (state & 3) + 1
+	state >>= 2
+	a = random.randint(MINV // 2, MAXV // 2) * 2 + (state & 1)
+	state >>= 1
+	b = random.randint(MINV // 2, MAXV // 2) * 2 + (state & 1)
+	state >>= 1
+	c = random.randint(MINV // 2, MAXV // 2) * 2 + (state & 1)
+	state >>= 1
+	a_0 = random.randint(MINV // 2, MAXV // 2) * 2 + (state & 1)
+	state >>= 1
+	a_1 = random.randint(MINV // 2, MAXV // 2) * 2 + (state & 1)
+	state >>= 1
+
 	p = 2
 	return [a, b, c, a_0, a_1, n, p]
 
@@ -403,13 +484,18 @@ def main():
 	gen.newTest(4, 3, gen4B)
 
 	gen.newTest(5, 2, gen5A)
-	gen.newTest(5, 3, gen5B)
+	gen.newTest(5, 1, gen5B)
+	gen.newTest(5, 3, gen5C)
+	gen.newTest(5, 3, gen5D)
 
 	gen.newTest(6, 2, gen6A)
-	gen.newTest(6, 3, gen6B)
+	gen.newTest(6, 1, gen6B)
+	gen.newTest(6, 3, gen6C)
+	gen.newTest(6, 3, gen6D)
 
 	gen.newTest(7, 2, gen7A)
-	gen.newTest(7, 3, gen7B)
+	gen.newTest(7, 1, gen7B)
+	gen.newTest(7, 10, gen7C)
 
 	gen.newTest(8, 2, gen8A)
 	gen.newTest(8, 3, gen8B)

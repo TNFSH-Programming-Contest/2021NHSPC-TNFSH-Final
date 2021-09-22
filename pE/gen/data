@@ -37,6 +37,10 @@ manual 5-01.in
 manual 5-02.in
 manual 5-03.in
 manual 5-04.in
+manual 5-05.in
+manual 5-06.in
+manual 5-07.in
+manual 5-08.in
 
 @subtask 6
 manual 6-00.in
@@ -44,6 +48,10 @@ manual 6-01.in
 manual 6-02.in
 manual 6-03.in
 manual 6-04.in
+manual 6-05.in
+manual 6-06.in
+manual 6-07.in
+manual 6-08.in
 
 @subtask 7
 manual 7-00.in
@@ -51,6 +59,14 @@ manual 7-01.in
 manual 7-02.in
 manual 7-03.in
 manual 7-04.in
+manual 7-05.in
+manual 7-06.in
+manual 7-07.in
+manual 7-08.in
+manual 7-09.in
+manual 7-10.in
+manual 7-11.in
+manual 7-12.in
 
 @subtask 8
 manual 8-00.in
