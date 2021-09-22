@@ -40,6 +40,8 @@ gen 5 0.004 0.4
 gen 5 0.005 1
 gen 5 0.006 1.8
 gen 5 0.007 2.8
+manual kokoro.in
+manual matsuri.in
 
 @subtask all
 gen 6 0.003 0.003
