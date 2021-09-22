@@ -262,6 +262,7 @@ jobs:
           git add tests/mapping
           git pull
           git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Build inputs and outputs"
+          git push
 
       - name: Build outputs
         if: ${{ !contains(needs.check-post.outputs.build-input, matrix.problem) && contains(needs.check-post.outputs.build-output, matrix.problem) }}
@@ -273,6 +274,7 @@ jobs:
           git add tests/*.out
           git pull
           git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Build outputs"
+          git push
 
       - name: Check tests changes
         id: tests-changes
@@ -298,8 +300,4 @@ jobs:
           git add solutions-check.txt
           git pull
           git diff --cached --quiet || git commit -m "p${{ matrix.problem }} Run solutions"
-
-      - name: Push
-        run: |
-          git pull
           git push
