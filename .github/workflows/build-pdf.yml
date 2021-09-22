@@ -192,7 +192,7 @@ jobs:
       - name: Merge pdfs
         run: |
           mkdir -p pA/attachments
-          pdfunite pA/statement/index.pdf pB/statement/index.pdf pC/statement/index.pdf pA/attachments/problems.pdf
+          pdfunite pA/statement/index.pdf pB/statement/index.pdf pC/statement/index.pdf pD/statement/index.pdf pE/statement/index.pdf pF/statement/index.pdf pA/attachments/problems.pdf
 
       - name: Check diff
         run: |
