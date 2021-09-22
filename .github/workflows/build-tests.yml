@@ -7,6 +7,7 @@ on:
       - '*/solution/**'
       - '*/problem.json'
       - '*/solutions.json'
+      - '*/subtasks.json'
   workflow_dispatch:
     inputs:
       input:
@@ -105,6 +106,14 @@ jobs:
             echo true > /home/runner/flags/build-input/${{ matrix.problem }}
           else
             echo "No changes in solutions.json for input";
+          fi
+
+          git diff ${{ github.event.before }}..HEAD -U0 p${{ matrix.problem }}/subtasks.json | grep '"score"'
+          if [ $? -eq 0 ]; then
+            echo true > /home/runner/flags/build-tests/${{ matrix.problem }}
+            echo true > /home/runner/flags/run-solutions/${{ matrix.problem }}
+          else
+            echo "No changes in subtasks.json for solutions";
           fi
 
       - name: Upload flags
