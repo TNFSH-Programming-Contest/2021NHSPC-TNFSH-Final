@@ -25,23 +25,23 @@ class TestGenerator(Generator):
 				),
 			]
 		)
-	
+
 	def presentAns(self):
 		return Entry(end='\n')
-	
+
 	def nativeSolve(self, file):
 		solver = str(GENDIR / 'sol_debug.exe')
 		proc = subprocess.run([solver], stdin=file, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 		ans = proc.stdout.decode().strip()
-		
+
 		if proc.stderr:
 			print('[solver]: {}'.format(proc.stderr.decode()))
-		
+
 		return ans
-	
+
 	def postProcess(self, test):
 		return
-	
+
 	def newTest(self, *args, **kwargs):
 		super().newTest(*args, **kwargs, native_solve=True)
 
@@ -60,9 +60,9 @@ def genAll(genfunc):
 		assert(abs(a_1) <= MAXV)
 		assert(1 <= n and n <= MAXN)
 		assert(1 <= p and p <= MAXP)
-		
+
 		return [[a, b, c], [a_0, a_1], [n, p]]
-	
+
 	return wrapfunc
 
 ############################## Gen 0 ##############################
@@ -71,9 +71,9 @@ def gen0(genfunc):
 	@genAll
 	def wrapfunc(**kwargs):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen0
@@ -106,9 +106,9 @@ def gen1(genfunc):
 	def wrapfunc(**kwargs):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(n <= 1000000)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen1
@@ -141,9 +141,9 @@ def gen2(genfunc):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(a == 0)
 		assert(c == 0)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen2
@@ -176,9 +176,9 @@ def gen3(genfunc):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(a == 0)
 		assert(b == 0)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen3
@@ -210,9 +210,9 @@ def gen4(genfunc):
 	def wrapfunc(**kwargs):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(a == 0)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen4
@@ -246,9 +246,9 @@ def gen5(genfunc):
 		assert(a == 1)
 		assert(b == 0)
 		assert(c == 0)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen5
@@ -305,9 +305,9 @@ def gen6(genfunc):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(b == 0)
 		assert(c == 0)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen6
@@ -375,9 +375,9 @@ def gen7(genfunc):
 	def wrapfunc(**kwargs):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
 		assert(p == 2)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen7
@@ -429,9 +429,9 @@ def gen8(genfunc):
 	@genAll
 	def wrapfunc(**kwargs):
 		[a, b, c, a_0, a_1, n, p] = genfunc(**kwargs)
-		
+
 		return [a, b, c, a_0, a_1, n, p]
-	
+
 	return wrapfunc
 
 @gen8
@@ -464,16 +464,16 @@ def main():
 
 	gen = TestGenerator()
 	gen.config(debug=False, test_format=test_format)
-	
+
 
 	gen.newTest(0, 1, gen0A)
 	gen.newTest(0, 1, gen0B)
 	gen.newTest(0, 1, gen0C)
 	# gen.newTest(0, 10, gen0D)
-	
+
 	gen.newTest(1, 2, gen1A)
 	gen.newTest(1, 3, gen1B)
-	
+
 	gen.newTest(2, 2, gen2A)
 	gen.newTest(2, 3, gen2B)
 
@@ -499,7 +499,7 @@ def main():
 
 	gen.newTest(8, 2, gen8A)
 	gen.newTest(8, 3, gen8B)
-	
+
 	runTest.config(test_dir=str(GENDIR.resolve() / 'manual'))
 	with open('data', 'w') as gendata:
 		caseMap = {}
@@ -513,11 +513,11 @@ def main():
 
 		print(caseMap)
 		for subtask in caseMap:
-			gendata.write('@subtask {}\n'.format(subtask))
+			gendata.write('@subtask {}\n'.format('samples' if subtask == 0 else subtask))
 			for inpath in caseMap[subtask]:
 				gendata.write('manual {}\n'.format(inpath))
 
-			gendata.write('\n')	
+			gendata.write('\n')
 
 if __name__ == "__main__":
 	genStart(main)
