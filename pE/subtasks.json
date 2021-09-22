@@ -11,7 +11,7 @@
         },
         "1": {
             "index": 1,
-            "score": 4,
+            "score": 1,
             "text": "$n \\le 10^6$",
             "validators": []
         },
@@ -23,37 +23,37 @@
         },
         "3": {
             "index": 3,
-            "score": 4,
+            "score": 2,
             "text": "$a = b = 0$",
             "validators": []
         },
         "4": {
             "index": 4,
-            "score": 4,
+            "score": 3,
             "text": "$a = 0$",
             "validators": []
         },
         "5": {
             "index": 5,
-            "score": 8,
+            "score": 5,
             "text": "$a = 1, \\ b = c = 0$",
             "validators": []
         },
         "6": {
             "index": 6,
-            "score": 6,
+            "score": 10,
             "text": "$b = c = 0$",
             "validators": []
         },
         "7": {
             "index": 7,
-            "score": 5,
+            "score": 2,
             "text": "$p = 2$",
             "validators": []
         },
         "8": {
             "index": 8,
-            "score": 3,
+            "score": 76,
             "text": "無任何限制",
             "validators": []
         }
