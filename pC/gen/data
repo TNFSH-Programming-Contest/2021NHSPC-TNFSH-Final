@@ -27,7 +27,7 @@ manual 3-2.in
 manual 3-3.in
 
 @subtask all
-manual sample-01.in
+manual 3-2.in
 manual sample-02.in
 gen 4 1
 gen 4 2
@@ -39,3 +39,4 @@ gen 4 7
 gen 4 8
 gen 4 9
 gen 4 10
+manual 4-0.in
