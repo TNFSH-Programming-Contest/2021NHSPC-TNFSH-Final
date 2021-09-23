@@ -11,25 +11,25 @@
         },
         "s1": {
             "index": 1,
-            "score": 25,
+            "score": 29,
             "text": "若對於大學 $a$ 來說，第 $i$ 人排名在第 $j$ 人之前，則對於 $i$ 與 $j$ 同時申請的所有大學來說，第 $i$ 人排名在第 $j$ 人之前。",
             "validators": []
         },
         "n8": {
             "index": 2,
-            "score": 30,
+            "score": 7,
             "text": "$n \\le 8$",
             "validators": []
         },
         "1e3": {
             "index": 3,
-            "score": 30,
+            "score": 31,
             "text": "$n \\le 1000$",
             "validators": []
         },
         "all": {
             "index": 4,
-            "score": 50,
+            "score": 33,
             "text": "無額外限制",
             "validators": []
         }

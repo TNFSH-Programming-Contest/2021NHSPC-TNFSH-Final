@@ -11,37 +11,37 @@
         },
         "5e3": {
             "index": 1,
-            "score": 20,
+            "score": 7,
             "text": "$n,q \\le 5000$",
             "validators": []
         },
         "k100": {
             "index": 2,
-            "score": 30,
+            "score": 9,
             "text": "$n,q \\le 10^5$ 且 $k \\le 100$",
             "validators": []
         },
         "kk": {
             "index": 3,
-            "score": 50,
+            "score": 17,
             "text": "所有$k$相同",
             "validators": []
         },
         "d50": {
             "index": 4,
-            "score": 50,
+            "score": 22,
             "text": "$n,q \\le 10^5$且與制高點距離相同的節點不超過50個",
             "validators": []
         },
         "1e5": {
             "index": 5,
-            "score": 50,
+            "score": 19,
             "text": "$n,q \\le 10^5$",
             "validators": []
         },
         "all": {
             "index": 6,
-            "score": 50,
+            "score": 26,
             "text": "無額外限制",
             "validators": []
         }
