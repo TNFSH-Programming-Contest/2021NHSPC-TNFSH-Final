@@ -19,7 +19,7 @@
 3-03	 25	manual 3-1.in
 3-04	 26	manual 3-2.in
 3-05	 27	manual 3-3.in
-4-01	 30	manual sample-01.in
+4-01	 30	manual 3-2.in
 4-02	 31	manual sample-02.in
 4-03	 32	gen 4 1
 4-04	 33	gen 4 2
@@ -31,3 +31,4 @@
 4-10	 39	gen 4 8
 4-11	 40	gen 4 9
 4-12	 41	gen 4 10
+4-13	 42	manual 4-0.in
