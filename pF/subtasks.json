@@ -11,31 +11,31 @@
         },
         "n4": {
             "index": 1,
-            "score": 20,
+            "score": 3,
             "text": "$n \\le 4$",
             "validators": []
         },
         "1e4": {
             "index": 2,
-            "score": 20,
+            "score": 9,
             "text": "$n \\le 10^4$",
             "validators": []
         },
         "1e6": {
             "index": 3,
-            "score": 20,
+            "score": 13,
             "text": "$n \\le 10^6$",
             "validators": []
         },
         "1e9": {
             "index": 4,
-            "score": 20,
+            "score": 49,
             "text": "$n \\le 10^9$",
             "validators": []
         },
         "1e18": {
             "index": 5,
-            "score": 20,
+            "score": 26,
             "text": "無額外限制",
             "validators": []
         }
