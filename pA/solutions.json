@@ -7,5 +7,14 @@
 	},
 	"full_sum_divisor.cpp": {
 		"verdict": "correct"
+	},
+	"full_enumerate.cpp": {
+		"verdict": "correct"
+	},
+	"partial_naive_n2lgn.cpp": {
+		"verdict": "time_limit"
+	},
+	"partial_n3.cpp": {
+		"verdict": "time_limit"
 	}
 }
