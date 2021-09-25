@@ -3,6 +3,8 @@
 
 ## Quick Links
 * [problems.pdf](pA/attachments/problems.pdf)
+* [Ranking](https://tnfsh-programming-contest.github.io/2021NHSPC-TNFSH-Final/ranking/Ranking.html)
+* [題解](detailed_solutions.pdf)
 
 | ID | statement | gen | validator | solution | tests | config |
 | --- | --- | --- | --- | --- | --- | --- |
